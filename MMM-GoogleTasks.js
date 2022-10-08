@@ -55,11 +55,13 @@ Module.register("MMM-GoogleTasks",{
 		var self = this;
 
 		if (notification === "SERVICE_READY") {
-			
 			self.sendSocketNotification("REQUEST_UPDATE", self.config);
-			
-			// Create repeating call to node_helper get list
-			setInterval(function() {
+
+			// Create repeating call to node_helper get list.
+			// Must make a helper variable to capture "this" at the right scope.
+			// See https://github.com/MichMich/MagicMirror/issues/196#issuecomment-211565531
+			var self = this;
+			setInterval(function () {
 				self.sendSocketNotification("REQUEST_UPDATE", self.config);
 			}, self.config.updateInterval);
 
